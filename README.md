@@ -1,17 +1,20 @@
-# call_bridge_app
+# Flutter Call Bridge
 
-A new Flutter project.
+Simple Flutter ↔ Native integration using MethodChannel.
 
-## Getting Started
+## Demo
 
-This project is a starting point for a Flutter application.
+![Demo](assets/android_result.mov)
 
-A few resources to get you started if this is your first Flutter project:
+## Features
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+- Flutter MethodChannel
+- Android Native Integration (Kotlin)
+- iOS Native Integration (Swift)
+- Open Phone Dialer
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Tech Stack
+
+- Flutter
+- Kotlin
+- Swift
