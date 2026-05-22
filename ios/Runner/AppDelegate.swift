@@ -4,36 +4,38 @@ import Flutter
 @main
 @objc class AppDelegate: FlutterAppDelegate {
 
-    private let CHANNEL = "call_bridge"
-
     override func application(
         _ application: UIApplication,
-        didFinishLaunchingWithOptions launchOptions:
-        [UIApplication.LaunchOptionsKey: Any]?
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
 
-        let controller : FlutterViewController =
-            window?.rootViewController as! FlutterViewController
+        GeneratedPluginRegistrant.register(with: self)
 
-        let methodChannel = FlutterMethodChannel(
-            name: CHANNEL,
+        guard let controller = self.window?.rootViewController as? FlutterViewController else {
+            return super.application(
+                application,
+                didFinishLaunchingWithOptions: launchOptions
+            )
+        }
+
+        let channel = FlutterMethodChannel(
+            name: "call_bridge",
             binaryMessenger: controller.binaryMessenger
         )
 
-        methodChannel.setMethodCallHandler {
-            (call: FlutterMethodCall,
-             result: @escaping FlutterResult) in
+        channel.setMethodCallHandler {
+            (call: FlutterMethodCall, result: @escaping FlutterResult) in
 
-            if call.method == "makeCall" {
+            switch call.method {
 
-                guard let args =
-                        call.arguments as? [String: Any],
-                      let phoneNumber =
-                        args["phoneNumber"] as? String
-                else {
+            case "makeCall":
+
+                guard let args = call.arguments as? [String: Any],
+                      let phoneNumber = args["phoneNumber"] as? String else {
+
                     result(
                         FlutterError(
-                            code: "INVALID_ARGUMENT",
+                            code: "INVALID_ARGS",
                             message: "Phone number missing",
                             details: nil
                         )
@@ -41,39 +43,31 @@ import Flutter
                     return
                 }
 
-                if let url = URL(
-                    string: "tel://\(phoneNumber)"
-                ) {
+                if let url = URL(string: "tel://\(phoneNumber)") {
 
                     UIApplication.shared.open(url)
 
-                    result(nil)
+                    result("success")
 
                 } else {
 
                     result(
                         FlutterError(
-                            code: "INVALID_URL",
+                            code: "INVALID_PHONE",
                             message: "Invalid phone number",
                             details: nil
                         )
                     )
                 }
 
-            } else {
-
+            default:
                 result(FlutterMethodNotImplemented)
             }
         }
 
-        GeneratedPluginRegistrant.register(
-            with: self
-        )
-
         return super.application(
             application,
-            didFinishLaunchingWithOptions:
-            launchOptions
+            didFinishLaunchingWithOptions: launchOptions
         )
     }
 }

@@ -2,9 +2,13 @@
 
 Simple Flutter ↔ Native integration using MethodChannel.
 
-## Demo
+## Demo Android
 
 ![Demo](assets/android_result.mov)
+
+## Demo IOS
+
+![Demo](assets/ios.mov)
 
 ## Features
 
